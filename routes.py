@@ -296,11 +296,24 @@ def set_language(language=None):
 @login_required
 def galeria():
     # Show published photos for regular users, all photos for admins
-    if current_user.is_admin:
-        photos = PhotoGallery.query.order_by(PhotoGallery.created_at.desc()).all()
-    else:
-        photos = PhotoGallery.query.filter_by(is_published=True).order_by(PhotoGallery.created_at.desc()).all()
-    return render_template('galeria.html', photos=photos)
+    page = request.args.get('page', 1, type=int)
+    category = request.args.get('category', 'all', type=str)
+    
+    query = PhotoGallery.query
+    
+    # Filter by publication status for non-admins
+    if not current_user.is_admin:
+        query = query.filter_by(is_published=True)
+    
+    # Filter by category
+    if category != 'all':
+        query = query.filter_by(category=category)
+    
+    photos = query.order_by(PhotoGallery.created_at.desc()).paginate(
+        page=page, per_page=12, error_out=False
+    )
+    
+    return render_template('galeria.html', photos=photos, current_category=category)
 
 @app.route('/admin/galeria', methods=['GET', 'POST'])
 @login_required
@@ -314,13 +327,15 @@ def admin_galeria():
         photo = PhotoGallery(
             title=form.title.data,
             description=form.description.data,
+            category=form.category.data,
+            event_name=form.event_name.data if form.category.data == 'evento' else None,
             is_published=form.is_published.data,
             user_id=current_user.id
         )
         
         # Handle image upload
         if form.image.data:
-            image_path = save_uploaded_file(form.image.data, 'uploads/gallery')
+            image_path = save_uploaded_file(form.image.data, 'static/uploads/gallery')
             photo.image_path = image_path
             
             db.session.add(photo)

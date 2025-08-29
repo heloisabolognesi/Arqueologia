@@ -74,5 +74,11 @@ class AdminUserForm(FlaskForm):
 class PhotoGalleryForm(FlaskForm):
     title = StringField('Título', validators=[DataRequired(), Length(max=200)])
     description = TextAreaField('Descrição')
+    category = SelectField('Categoria', choices=[
+        ('geral', 'Foto Geral'),
+        ('equipe', 'Foto da Equipe'),
+        ('evento', 'Foto de Evento')
+    ], default='geral')
+    event_name = StringField('Nome do Evento', validators=[Length(max=200)])
     image = FileField('Imagem', validators=[DataRequired(), FileAllowed(['jpg', 'jpeg', 'png', 'gif'], 'Apenas imagens são permitidas!')])
     is_published = BooleanField('Publicar no Mural')

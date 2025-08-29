@@ -74,6 +74,8 @@ class PhotoGallery(db.Model):
     title = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text)
     image_path = db.Column(db.String(255), nullable=False)
+    category = db.Column(db.String(50), default='geral')  # geral, equipe, evento
+    event_name = db.Column(db.String(200))  # Nome do evento se categoria for 'evento'
     is_published = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

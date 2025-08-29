@@ -109,7 +109,25 @@ def simple_translate(text, lang=None):
             'Nome de Usuário': 'Username',
             'Criar Conta no L.A.A.R.I': 'Create L.A.A.R.I Account',
             'Já possui uma conta?': 'Already have an account?',
-            'Faça login aqui': 'Login here'
+            'Faça login aqui': 'Login here',
+            'Galeria de Fotos': 'Photo Gallery',
+            'Adicionar Foto': 'Add Photo',
+            'Filtrar por:': 'Filter by:',
+            'Todas': 'All',
+            'Gerais': 'General',
+            'Equipe': 'Team',
+            'Eventos': 'Events',
+            'Ver': 'View',
+            'Geral': 'General',
+            'Evento': 'Event',
+            'Paginação da galeria': 'Gallery pagination',
+            'Anterior': 'Previous',
+            'Próxima': 'Next',
+            'Galeria Vazia': 'Empty Gallery',
+            'Não há fotos publicadas na galeria ainda.': 'There are no published photos in the gallery yet.',
+            'Adicionar Primeira Foto': 'Add First Photo',
+            'Carregando...': 'Loading...',
+            'Carregando mais fotos...': 'Loading more photos...'
         },
         'es': {
             'Bem-vindo': 'Bienvenido',
@@ -150,7 +168,25 @@ def simple_translate(text, lang=None):
             'Nome de Usuário': 'Nombre de Usuario',
             'Criar Conta no L.A.A.R.I': 'Crear Cuenta en L.A.A.R.I',
             'Já possui uma conta?': '¿Ya tienes una cuenta?',
-            'Faça login aqui': 'Inicia sesión aquí'
+            'Faça login aqui': 'Inicia sesión aquí',
+            'Galeria de Fotos': 'Galería de Fotos',
+            'Adicionar Foto': 'Agregar Foto',
+            'Filtrar por:': 'Filtrar por:',
+            'Todas': 'Todas',
+            'Gerais': 'Generales',
+            'Equipe': 'Equipo',
+            'Eventos': 'Eventos',
+            'Ver': 'Ver',
+            'Geral': 'General',
+            'Evento': 'Evento',
+            'Paginação da galeria': 'Paginación de galería',
+            'Anterior': 'Anterior',
+            'Próxima': 'Siguiente',
+            'Galeria Vazia': 'Galería Vacía',
+            'Não há fotos publicadas na galeria ainda.': 'Aún no hay fotos publicadas en la galería.',
+            'Adicionar Primeira Foto': 'Agregar Primera Foto',
+            'Carregando...': 'Cargando...',
+            'Carregando mais fotos...': 'Cargando más fotos...'
         }
     }
     
