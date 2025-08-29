@@ -1,7 +1,7 @@
 [project]
-name = "repl-nix-workspace"
-version = "0.1.0"
-description = "Add your description here"
+name = "laari-archaeological-system"
+version = "1.0.0"
+description = "L.A.A.R.I - Sistema de Gestão Arqueológica Integrado"
 requires-python = ">=3.11"
 dependencies = [
     "email-validator>=2.3.0",

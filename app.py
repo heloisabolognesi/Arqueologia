@@ -7,8 +7,9 @@ from flask_babel import Babel, gettext, ngettext
 from sqlalchemy.orm import DeclarativeBase
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-# Configure logging
-logging.basicConfig(level=logging.DEBUG)
+# Configure logging (adjust for production)
+log_level = logging.DEBUG if os.environ.get('FLASK_ENV') != 'production' else logging.INFO
+logging.basicConfig(level=log_level)
 
 class Base(DeclarativeBase):
     pass
