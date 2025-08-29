@@ -21,10 +21,14 @@ app.secret_key = os.environ.get("SESSION_SECRET", "laari-archaeological-secret-k
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 # Configure the database
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///laari.db")
+database_url = os.environ.get("DATABASE_URL", "sqlite:///laari.db")
+if database_url.startswith("sqlite"):
+    database_url += "?charset=utf8mb4"
+app.config["SQLALCHEMY_DATABASE_URI"] = database_url
 app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
     "pool_recycle": 300,
     "pool_pre_ping": True,
+    "connect_args": {"charset": "utf8mb4"} if database_url.startswith("sqlite") else {}
 }
 
 # Configure upload settings
