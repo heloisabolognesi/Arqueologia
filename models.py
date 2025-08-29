@@ -27,6 +27,7 @@ class Professional(db.Model):
 class Artifact(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
+    code = db.Column(db.String(50), unique=True)  # Código do artefato
     discovery_date = db.Column(db.Date)
     origin_location = db.Column(db.String(300))
     artifact_type = db.Column(db.String(100))
@@ -67,3 +68,18 @@ class Scanner3D(db.Model):
     
     # Relationship
     artifact = db.relationship('Artifact', backref='scans_3d')
+
+class PhotoGallery(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.Text)
+    image_path = db.Column(db.String(255), nullable=False)
+    is_published = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Foreign key
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    
+    # Relationship
+    created_by = db.relationship('User', backref='photo_galleries')

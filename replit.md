@@ -1,4 +1,4 @@
-# L.A.A.R.I - Laboratório Arqueológico Artefatos Remoto Integrado
+# L.A.A.R.I - Laboratório e Acervo Arqueológico Remoto Integrado
 
 ## Overview
 

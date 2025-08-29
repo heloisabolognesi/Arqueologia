@@ -14,6 +14,7 @@ class RegisterForm(FlaskForm):
 
 class ArtifactForm(FlaskForm):
     name = StringField('Nome do Artefato', validators=[DataRequired(), Length(max=200)])
+    code = StringField('Código do Artefato', validators=[Length(max=50)])
     discovery_date = DateField('Data de Descoberta', validators=[Optional()])
     origin_location = StringField('Local de Origem', validators=[Length(max=300)])
     artifact_type = SelectField('Tipo de Artefato', choices=[
@@ -69,3 +70,9 @@ class AdminUserForm(FlaskForm):
     user_id = SelectField('Usuário', coerce=int, validators=[DataRequired()])
     is_active = BooleanField('Usuário Ativo')
     is_admin = BooleanField('Administrador')
+
+class PhotoGalleryForm(FlaskForm):
+    title = StringField('Título', validators=[DataRequired(), Length(max=200)])
+    description = TextAreaField('Descrição')
+    image = FileField('Imagem', validators=[DataRequired(), FileAllowed(['jpg', 'jpeg', 'png', 'gif'], 'Apenas imagens são permitidas!')])
+    is_published = BooleanField('Publicar no Mural')

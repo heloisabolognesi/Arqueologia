@@ -25,7 +25,7 @@
                     
                     <div class="row g-3">
                         <!-- Nome do Artefato -->
-                        <div class="col-12">
+                        <div class="col-md-8">
                             <label for="{{ form.name.id }}" class="form-label fw-bold">
                                 <i class="fas fa-signature me-2"></i>Nome do Artefato *
                             </label>
@@ -33,6 +33,20 @@
                             {% if form.name.errors %}
                                 <div class="invalid-feedback d-block">
                                     {% for error in form.name.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Código do Artefato -->
+                        <div class="col-md-4">
+                            <label for="{{ form.code.id }}" class="form-label fw-bold">
+                                <i class="fas fa-barcode me-2"></i>Código do Artefato
+                            </label>
+                            {{ form.code(class="form-control form-control-lg", placeholder="Código único") }}
+                            <small class="form-text text-muted">Se vazio, será gerado automaticamente</small>
+                            {% if form.code.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.code.errors %}{{ error }}{% endfor %}
                                 </div>
                             {% endif %}
                         </div>

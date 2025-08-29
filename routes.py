@@ -1,14 +1,14 @@
 import os
 import uuid
-from flask import render_template, request, redirect, url_for, flash, current_app, jsonify
+from flask import render_template, request, redirect, url_for, flash, current_app, jsonify, session
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from datetime import datetime
 
-from app import app, db
-from models import User, Artifact, Professional, Transport, Scanner3D
-from forms import LoginForm, RegisterForm, ArtifactForm, ProfessionalForm, TransportForm, Scanner3DForm, AdminUserForm
+from app import app, db, LANGUAGES
+from models import User, Artifact, Professional, Transport, Scanner3D, PhotoGallery
+from forms import LoginForm, RegisterForm, ArtifactForm, ProfessionalForm, TransportForm, Scanner3DForm, AdminUserForm, PhotoGalleryForm
 
 def allowed_file(filename, allowed_extensions):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
@@ -101,6 +101,7 @@ def catalogar_novo():
     if form.validate_on_submit():
         artifact = Artifact(
             name=form.name.data,
+            code=form.code.data if form.code.data else f"LAR-{uuid.uuid4().hex[:8].upper()}",
             discovery_date=form.discovery_date.data,
             origin_location=form.origin_location.data,
             artifact_type=form.artifact_type.data,
@@ -282,6 +283,86 @@ def toggle_admin_status(user_id):
         flash(f'Usuário {user.username} foi {status}.', 'success')
     
     return redirect(url_for('admin'))
+
+# Language routes
+@app.route('/set_language/<language>')
+def set_language(language=None):
+    if language and language in LANGUAGES:
+        session['language'] = language
+    return redirect(request.referrer or url_for('index'))
+
+# Photo Gallery routes
+@app.route('/galeria')
+@login_required
+def galeria():
+    # Show published photos for regular users, all photos for admins
+    if current_user.is_admin:
+        photos = PhotoGallery.query.order_by(PhotoGallery.created_at.desc()).all()
+    else:
+        photos = PhotoGallery.query.filter_by(is_published=True).order_by(PhotoGallery.created_at.desc()).all()
+    return render_template('galeria.html', photos=photos)
+
+@app.route('/admin/galeria', methods=['GET', 'POST'])
+@login_required
+def admin_galeria():
+    if not current_user.is_admin:
+        flash('Acesso negado.', 'error')
+        return redirect(url_for('dashboard'))
+    
+    form = PhotoGalleryForm()
+    if form.validate_on_submit():
+        photo = PhotoGallery(
+            title=form.title.data,
+            description=form.description.data,
+            is_published=form.is_published.data,
+            user_id=current_user.id
+        )
+        
+        # Handle image upload
+        if form.image.data:
+            image_path = save_uploaded_file(form.image.data, 'uploads/gallery')
+            photo.image_path = image_path
+            
+            db.session.add(photo)
+            db.session.commit()
+            flash('Foto adicionada à galeria com sucesso!', 'success')
+            return redirect(url_for('admin_galeria'))
+    
+    photos = PhotoGallery.query.order_by(PhotoGallery.created_at.desc()).all()
+    return render_template('admin_galeria.html', form=form, photos=photos)
+
+@app.route('/admin/galeria/toggle/<int:photo_id>')
+@login_required
+def toggle_photo_publication(photo_id):
+    if not current_user.is_admin:
+        flash('Acesso negado.', 'error')
+        return redirect(url_for('dashboard'))
+    
+    photo = PhotoGallery.query.get_or_404(photo_id)
+    photo.is_published = not photo.is_published
+    db.session.commit()
+    
+    status = "publicada" if photo.is_published else "despublicada"
+    flash(f'Foto "{photo.title}" foi {status}.', 'success')
+    return redirect(url_for('admin_galeria'))
+
+@app.route('/admin/galeria/delete/<int:photo_id>')
+@login_required
+def delete_photo(photo_id):
+    if not current_user.is_admin:
+        flash('Acesso negado.', 'error')
+        return redirect(url_for('dashboard'))
+    
+    photo = PhotoGallery.query.get_or_404(photo_id)
+    
+    # Delete the image file if it exists
+    if photo.image_path and os.path.exists(photo.image_path):
+        os.remove(photo.image_path)
+    
+    db.session.delete(photo)
+    db.session.commit()
+    flash(f'Foto "{photo.title}" foi removida da galeria.', 'success')
+    return redirect(url_for('admin_galeria'))
 
 # Error handlers
 @app.errorhandler(404)

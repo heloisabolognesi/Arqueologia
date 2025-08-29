@@ -1,8 +1,9 @@
 import os
 import logging
-from flask import Flask
+from flask import Flask, request, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_babel import Babel
 from sqlalchemy.orm import DeclarativeBase
 from werkzeug.middleware.proxy_fix import ProxyFix
 
@@ -36,6 +37,26 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 login_manager.login_message = 'Por favor, faça login para acessar esta página.'
+
+# Initialize Babel
+babel = Babel()
+babel.init_app(app)
+
+# Supported languages
+LANGUAGES = {
+    'pt': 'Português',
+    'en': 'English', 
+    'es': 'Español'
+}
+
+def get_locale():
+    # 1. If user has selected a language, use it
+    if 'language' in session:
+        return session['language']
+    # 2. Otherwise try to guess from browser
+    return request.accept_languages.best_match(LANGUAGES.keys()) or 'pt'
+
+babel.locale_selector_func = get_locale
 
 @login_manager.user_loader
 def load_user(user_id):

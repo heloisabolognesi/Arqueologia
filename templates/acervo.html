@@ -67,6 +67,7 @@
                     <tr>
                         <th width="50">Foto</th>
                         <th>Nome do Artefato</th>
+                        <th>Código</th>
                         <th>Código QR</th>
                         <th>Tipo</th>
                         <th>Local de Origem</th>
@@ -97,6 +98,13 @@
                             <div class="fw-bold">{{ artifact.name }}</div>
                             {% if artifact.observations %}
                             <small class="text-muted">{{ artifact.observations[:50] }}{% if artifact.observations|length > 50 %}...{% endif %}</small>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if artifact.code %}
+                                <span class="badge bg-secondary font-monospace">{{ artifact.code }}</span>
+                            {% else %}
+                                <span class="text-muted">-</span>
                             {% endif %}
                         </td>
                         <td>
