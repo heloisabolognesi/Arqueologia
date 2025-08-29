@@ -9,13 +9,29 @@
             <h1 class="display-6 fw-bold">
                 <i class="fas fa-images me-3"></i>{{ _('Galeria de Fotos') }}
             </h1>
-            <p class="lead text-muted">Mural de imagens arqueológicas, eventos e equipe</p>
+            <p class="lead text-muted">{{ _('Mural de imagens arqueológicas, eventos e equipe') }}</p>
         </div>
         {% if current_user.is_admin %}
         <a href="{{ url_for('admin_galeria') }}" class="btn btn-archaeological">
-            <i class="fas fa-plus me-2"></i>Adicionar Foto
+            <i class="fas fa-plus me-2"></i>{{ _('Adicionar Foto') }}
         </a>
         {% endif %}
+    </div>
+</div>
+
+<!-- Robotics Team Section -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm bg-light">
+            <div class="card-body text-center">
+                <h4 class="card-title text-archaeological mb-3">
+                    <i class="fas fa-robot me-2"></i>{{ _('Conheca mais da nossa equipe') }}
+                </h4>
+                <p class="card-text text-muted">
+                    {{ _('Nossa equipe de robótica é formada por estudantes apaixonados por tecnologia e inovação, que se dedicam ao desenvolvimento de projetos educacionais e competições de robótica.') }}
+                </p>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -25,22 +41,22 @@
         <div class="card border-0 shadow-sm">
             <div class="card-body py-3">
                 <div class="d-flex flex-wrap gap-2 align-items-center">
-                    <span class="text-muted me-3"><i class="fas fa-filter me-1"></i>Filtrar por:</span>
+                    <span class="text-muted me-3"><i class="fas fa-filter me-1"></i>{{ _('Filtrar por:') }}</span>
                     <a href="{{ url_for('galeria', category='all') }}" 
                        class="btn btn-sm {% if current_category == 'all' %}btn-archaeological{% else %}btn-outline-secondary{% endif %}">
-                        <i class="fas fa-th me-1"></i>Todas
+                        <i class="fas fa-th me-1"></i>{{ _('Todas') }}
                     </a>
                     <a href="{{ url_for('galeria', category='geral') }}" 
                        class="btn btn-sm {% if current_category == 'geral' %}btn-archaeological{% else %}btn-outline-secondary{% endif %}">
-                        <i class="fas fa-camera me-1"></i>Gerais
+                        <i class="fas fa-camera me-1"></i>{{ _('Gerais') }}
                     </a>
                     <a href="{{ url_for('galeria', category='equipe') }}" 
                        class="btn btn-sm {% if current_category == 'equipe' %}btn-archaeological{% else %}btn-outline-secondary{% endif %}">
-                        <i class="fas fa-users me-1"></i>Equipe
+                        <i class="fas fa-users me-1"></i>{{ _('Equipe') }}
                     </a>
                     <a href="{{ url_for('galeria', category='evento') }}" 
                        class="btn btn-sm {% if current_category == 'evento' %}btn-archaeological{% else %}btn-outline-secondary{% endif %}">
-                        <i class="fas fa-calendar me-1"></i>Eventos
+                        <i class="fas fa-calendar me-1"></i>{{ _('Eventos') }}
                     </a>
                 </div>
             </div>
@@ -66,15 +82,15 @@
                 <div class="position-absolute top-0 start-0 m-2">
                     {% if photo.category == 'equipe' %}
                     <span class="badge bg-primary bg-opacity-90">
-                        <i class="fas fa-users me-1"></i>Equipe
+                        <i class="fas fa-users me-1"></i>{{ _('Equipe') }}
                     </span>
                     {% elif photo.category == 'evento' %}
                     <span class="badge bg-success bg-opacity-90">
-                        <i class="fas fa-calendar me-1"></i>Evento
+                        <i class="fas fa-calendar me-1"></i>{{ _('Evento') }}
                     </span>
                     {% else %}
                     <span class="badge bg-secondary bg-opacity-90">
-                        <i class="fas fa-camera me-1"></i>Geral
+                        <i class="fas fa-camera me-1"></i>{{ _('Geral') }}
                     </span>
                     {% endif %}
                 </div>
@@ -111,7 +127,7 @@
                     <button class="btn btn-outline-archaeological btn-sm" 
                             data-bs-toggle="modal" 
                             data-bs-target="#photoModal{{ photo.id }}">
-                        <i class="fas fa-eye me-1"></i>Ver
+                        <i class="fas fa-eye me-1"></i>{{ _('Ver') }}
                     </button>
                 </div>
             </div>
@@ -158,12 +174,12 @@
 {% if photos.pages > 1 %}
 <div class="row mt-5">
     <div class="col-12">
-        <nav aria-label="Paginação da galeria">
+        <nav aria-label="{{ _('Paginação da galeria') }}">
             <ul class="pagination justify-content-center">
                 {% if photos.has_prev %}
                 <li class="page-item">
                     <a class="page-link" href="{{ url_for('galeria', page=photos.prev_num, category=current_category) }}">
-                        <i class="fas fa-chevron-left me-1"></i>Anterior
+                        <i class="fas fa-chevron-left me-1"></i>{{ _('Anterior') }}
                     </a>
                 </li>
                 {% endif %}
@@ -189,7 +205,7 @@
                 {% if photos.has_next %}
                 <li class="page-item">
                     <a class="page-link" href="{{ url_for('galeria', page=photos.next_num, category=current_category) }}">
-                        Próxima<i class="fas fa-chevron-right ms-1"></i>
+                        {{ _('Próxima') }}<i class="fas fa-chevron-right ms-1"></i>
                     </a>
                 </li>
                 {% endif %}
@@ -203,17 +219,17 @@
 <!-- Empty State -->
 <div class="empty-state text-center py-5">
     <i class="fas fa-images fa-4x text-muted mb-4"></i>
-    <h3 class="text-muted">Galeria Vazia</h3>
+    <h3 class="text-muted">{{ _('Galeria Vazia') }}</h3>
     <p class="lead text-muted mb-4">
         {% if current_category == 'all' %}
-        Não há fotos publicadas na galeria ainda.
+        {{ _('Não há fotos publicadas na galeria ainda.') }}
         {% else %}
-        Não há fotos na categoria "{{ current_category }}" ainda.
+        {{ _('Não há fotos na categoria') }} "{{ current_category }}" {{ _('ainda.') }}
         {% endif %}
     </p>
     {% if current_user.is_admin %}
     <a href="{{ url_for('admin_galeria') }}" class="btn btn-archaeological btn-lg">
-        <i class="fas fa-plus me-2"></i>Adicionar Primeira Foto
+        <i class="fas fa-plus me-2"></i>{{ _('Adicionar Primeira Foto') }}
     </a>
     {% endif %}
 </div>
@@ -222,9 +238,9 @@
 <!-- Loading indicator for infinite scroll (placeholder) -->
 <div id="loading-indicator" class="text-center py-4 d-none">
     <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Carregando...</span>
+        <span class="visually-hidden">{{ _('Carregando...') }}</span>
     </div>
-    <p class="text-muted mt-2">Carregando mais fotos...</p>
+    <p class="text-muted mt-2">{{ _('Carregando mais fotos...') }}</p>
 </div>
 
 <style>
@@ -273,6 +289,10 @@
     background-color: #5F3A1F;
     border-color: #5F3A1F;
     color: white;
+}
+
+.text-archaeological {
+    color: #5F3A1F;
 }
 
 @media (max-width: 768px) {

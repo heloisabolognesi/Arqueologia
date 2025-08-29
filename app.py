@@ -127,7 +127,23 @@ def simple_translate(text, lang=None):
             'Não há fotos publicadas na galeria ainda.': 'There are no published photos in the gallery yet.',
             'Adicionar Primeira Foto': 'Add First Photo',
             'Carregando...': 'Loading...',
-            'Carregando mais fotos...': 'Loading more photos...'
+            'Carregando mais fotos...': 'Loading more photos...',
+            'Mural de imagens arqueológicas, eventos e equipe': 'Archaeological images, events and team gallery',
+            'Adicionar Foto': 'Add Photo',
+            'Filtrar por:': 'Filter by:',
+            'Todas': 'All',
+            'Gerais': 'General',
+            'Equipe': 'Team',
+            'Eventos': 'Events',
+            'Ver': 'View',
+            'Paginação da galeria': 'Gallery pagination',
+            'Anterior': 'Previous',
+            'Próxima': 'Next',
+            'Não há fotos na categoria': 'No photos in category',
+            'ainda.': 'yet.',
+            'Adicionar Primeira Foto': 'Add First Photo',
+            'Conheca mais da nossa equipe': 'Learn more about our team',
+            'Nossa equipe de robótica é formada por estudantes apaixonados por tecnologia e inovação, que se dedicam ao desenvolvimento de projetos educacionais e competições de robótica.': 'Our robotics team consists of students passionate about technology and innovation, dedicated to developing educational projects and robotics competitions.'
         },
         'es': {
             'Bem-vindo': 'Bienvenido',
@@ -186,7 +202,23 @@ def simple_translate(text, lang=None):
             'Não há fotos publicadas na galeria ainda.': 'Aún no hay fotos publicadas en la galería.',
             'Adicionar Primeira Foto': 'Agregar Primera Foto',
             'Carregando...': 'Cargando...',
-            'Carregando mais fotos...': 'Cargando más fotos...'
+            'Carregando mais fotos...': 'Cargando más fotos...',
+            'Mural de imagens arqueológicas, eventos e equipe': 'Galería de imágenes arqueológicas, eventos y equipo',
+            'Adicionar Foto': 'Agregar Foto',
+            'Filtrar por:': 'Filtrar por:',
+            'Todas': 'Todas',
+            'Gerais': 'Generales',
+            'Equipe': 'Equipo',
+            'Eventos': 'Eventos',
+            'Ver': 'Ver',
+            'Paginação da galeria': 'Paginación de galería',
+            'Anterior': 'Anterior',
+            'Próxima': 'Siguiente',
+            'Não há fotos na categoria': 'No hay fotos en la categoría',
+            'ainda.': 'aún.',
+            'Adicionar Primeira Foto': 'Agregar Primera Foto',
+            'Conheca mais da nossa equipe': 'Conoce más sobre nuestro equipo',
+            'Nossa equipe de robótica é formada por estudantes apaixonados por tecnologia e inovação, que se dedicam ao desenvolvimento de projetos educacionais e competições de robótica.': 'Nuestro equipo de robótica está formado por estudiantes apasionados por la tecnología y la innovación, dedicados al desarrollo de proyectos educativos y competencias de robótica.'
         }
     }
     
@@ -234,6 +266,25 @@ with app.app_context():
             db.session.add(admin_user)
             db.session.commit()
             logging.info("Admin user created from environment variables")
+    
+    # Create additional admin users
+    additional_admins = [
+        {'username': 'Anna Schimidt', 'email': 'anna.schimidtt@sesisp.org.br', 'password': '27072000'},
+        {'username': 'Roboticos415F2', 'email': 'roboticos415f2@gmail.com', 'password': '24062025'}
+    ]
+    
+    for admin_data in additional_admins:
+        existing_admin = User.query.filter_by(email=admin_data['email']).first()
+        if not existing_admin:
+            new_admin = User(
+                username=admin_data['username'],
+                email=admin_data['email'],
+                password_hash=generate_password_hash(admin_data['password']),
+                is_admin=True
+            )
+            db.session.add(new_admin)
+            db.session.commit()
+            logging.info(f"Admin user {admin_data['username']} created")
 
 # Import routes
 import routes

@@ -336,7 +336,7 @@ def admin_galeria():
         # Handle image upload
         if form.image.data:
             image_path = save_uploaded_file(form.image.data, 'static/uploads/gallery')
-            photo.image_path = image_path
+            photo.image_path = f"uploads/gallery/{os.path.basename(image_path)}"
             
             db.session.add(photo)
             db.session.commit()
