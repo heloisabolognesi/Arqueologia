@@ -92,7 +92,24 @@ def simple_translate(text, lang=None):
             'Inventário': 'Inventory',
             'Controle completo do inventário': 'Complete inventory control',
             'Transporte': 'Transport',
-            'Rastreamento de movimentação': 'Movement tracking'
+            'Rastreamento de movimentação': 'Movement tracking',
+            'Dashboard': 'Dashboard',
+            'Acervo': 'Collection',
+            'Galeria': 'Gallery',
+            'Idioma': 'Language',
+            'Administração': 'Administration',
+            'Gerenciar Galeria': 'Manage Gallery',
+            'Sair': 'Logout',
+            'Email': 'Email',
+            'Senha': 'Password',
+            'Entrar no L.A.A.R.I': 'Login to L.A.A.R.I',
+            'Não possui uma conta?': 'Don\'t have an account?',
+            'Cadastre-se aqui': 'Register here',
+            'Voltar ao início': 'Back to home',
+            'Nome de Usuário': 'Username',
+            'Criar Conta no L.A.A.R.I': 'Create L.A.A.R.I Account',
+            'Já possui uma conta?': 'Already have an account?',
+            'Faça login aqui': 'Login here'
         },
         'es': {
             'Bem-vindo': 'Bienvenido',
@@ -116,7 +133,24 @@ def simple_translate(text, lang=None):
             'Inventário': 'Inventario',
             'Controle completo do inventário': 'Control completo del inventario',
             'Transporte': 'Transporte',
-            'Rastreamento de movimentação': 'Seguimiento de movimiento'
+            'Rastreamento de movimentação': 'Seguimiento de movimiento',
+            'Dashboard': 'Panel',
+            'Acervo': 'Acervo',
+            'Galeria': 'Galería',
+            'Idioma': 'Idioma',
+            'Administração': 'Administración',
+            'Gerenciar Galeria': 'Gestionar Galería',
+            'Sair': 'Salir',
+            'Email': 'Email',
+            'Senha': 'Contraseña',
+            'Entrar no L.A.A.R.I': 'Ingresar a L.A.A.R.I',
+            'Não possui uma conta?': '¿No tienes una cuenta?',
+            'Cadastre-se aqui': 'Regístrate aquí',
+            'Voltar ao início': 'Volver al inicio',
+            'Nome de Usuário': 'Nombre de Usuario',
+            'Criar Conta no L.A.A.R.I': 'Crear Cuenta en L.A.A.R.I',
+            'Já possui uma conta?': '¿Ya tienes una cuenta?',
+            'Faça login aqui': 'Inicia sesión aquí'
         }
     }
     
