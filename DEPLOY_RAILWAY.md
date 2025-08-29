@@ -1,4 +1,4 @@
-# Deploy L.A.A.R.I na Railway
+# 🚀 Deploy L.A.A.R.I na Railway - Pronto!
 
 ## Passos para Deploy
 

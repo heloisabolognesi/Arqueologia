@@ -23,18 +23,31 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 # Configure the database
 database_url = os.environ.get("DATABASE_URL", "sqlite:///laari.db")
+
+# Railway PostgreSQL URL fix
+if database_url and database_url.startswith("postgres://"):
+    database_url = database_url.replace("postgres://", "postgresql://", 1)
+
 if database_url.startswith("sqlite"):
     database_url += "?charset=utf8mb4"
+    
 app.config["SQLALCHEMY_DATABASE_URI"] = database_url
 app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
     "pool_recycle": 300,
     "pool_pre_ping": True,
-    "connect_args": {"charset": "utf8mb4"} if database_url.startswith("sqlite") else {}
+    "connect_args": {"charset": "utf8mb4"} if database_url.startswith("sqlite") else {
+        "sslmode": "require" if database_url.startswith("postgresql") else {}
+    }
 }
 
-# Configure upload settings
-app.config['UPLOAD_FOLDER'] = 'uploads'
+# Configure upload settings (Railway-optimized)
+upload_folder = os.path.join(os.getcwd(), 'uploads')
+os.makedirs(upload_folder, exist_ok=True)
+app.config['UPLOAD_FOLDER'] = upload_folder
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
+
+# Railway static files optimization
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 31536000
 
 # Initialize extensions
 db.init_app(app)
