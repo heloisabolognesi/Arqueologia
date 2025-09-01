@@ -38,9 +38,14 @@ app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
     "connect_args": {"charset": "utf8mb4"} if database_url.startswith("sqlite") else {}
 }
 
-# Configure upload settings (Railway-optimized)
-upload_folder = os.path.join(os.getcwd(), 'uploads')
+# Configure upload settings (Replit-optimized)
+upload_folder = os.path.join(os.getcwd(), 'static', 'uploads')
 os.makedirs(upload_folder, exist_ok=True)
+# Create all upload subdirectories
+upload_subdirs = ['photos', '3d_models', 'profiles', '3d_scans', 'gallery']
+for subdir in upload_subdirs:
+    os.makedirs(os.path.join(upload_folder, subdir), exist_ok=True)
+
 app.config['UPLOAD_FOLDER'] = upload_folder
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 

@@ -14,14 +14,38 @@ def allowed_file(filename, allowed_extensions):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
 
 def save_uploaded_file(file, folder='uploads'):
-    if file and file.filename:
+    """Save uploaded file with proper error handling and path consistency"""
+    if not file or not file.filename:
+        return None
+        
+    try:
+        # Secure the filename
         filename = secure_filename(file.filename)
+        if not filename:
+            return None
+            
+        # Generate unique filename
         unique_filename = f"{uuid.uuid4().hex}_{filename}"
-        file_path = os.path.join(folder, unique_filename)
-        os.makedirs(folder, exist_ok=True)
+        
+        # Ensure folder exists
+        full_folder_path = os.path.join(current_app.static_folder, folder) if folder.startswith('uploads/') else folder
+        os.makedirs(full_folder_path, exist_ok=True)
+        
+        # Full file path
+        file_path = os.path.join(full_folder_path, unique_filename)
+        
+        # Save file
         file.save(file_path)
-        return file_path
-    return None
+        
+        # Return relative path for database storage
+        if folder.startswith('uploads/'):
+            return f"{folder}/{unique_filename}"
+        else:
+            return file_path
+            
+    except Exception as e:
+        current_app.logger.error(f"Error saving file: {str(e)}")
+        return None
 
 @app.route('/')
 def index():
@@ -114,12 +138,18 @@ def catalogar_novo():
         # Handle photo upload
         if form.photo.data:
             photo_path = save_uploaded_file(form.photo.data, 'uploads/photos')
-            artifact.photo_path = photo_path
+            if photo_path:
+                artifact.photo_path = photo_path
+            else:
+                flash('Erro ao fazer upload da foto. Tente novamente.', 'warning')
         
         # Handle 3D model upload
         if form.model_3d.data:
             model_path = save_uploaded_file(form.model_3d.data, 'uploads/3d_models')
-            artifact.model_3d_path = model_path
+            if model_path:
+                artifact.model_3d_path = model_path
+            else:
+                flash('Erro ao fazer upload do modelo 3D. Tente novamente.', 'warning')
         
         db.session.add(artifact)
         db.session.commit()
@@ -168,7 +198,10 @@ def adicionar_profissional():
         # Handle profile photo upload
         if form.profile_photo.data:
             photo_path = save_uploaded_file(form.profile_photo.data, 'uploads/profiles')
-            professional.profile_photo = photo_path
+            if photo_path:
+                professional.profile_photo = photo_path
+            else:
+                flash('Erro ao fazer upload da foto de perfil. Tente novamente.', 'warning')
         
         db.session.add(professional)
         db.session.commit()
@@ -197,10 +230,14 @@ def scanner_3d():
         # Handle scan file upload
         if form.scan_file.data:
             file_path = save_uploaded_file(form.scan_file.data, 'uploads/3d_scans')
-            scan.file_path = file_path
-            # Get file size
-            if os.path.exists(file_path):
-                scan.file_size = os.path.getsize(file_path)
+            if file_path:
+                scan.file_path = file_path
+                # Get file size
+                full_path = os.path.join(current_app.static_folder, file_path)
+                if os.path.exists(full_path):
+                    scan.file_size = os.path.getsize(full_path)
+            else:
+                flash('Erro ao fazer upload do arquivo de scan. Tente novamente.', 'warning')
         
         db.session.add(scan)
         db.session.commit()
@@ -335,13 +372,15 @@ def admin_galeria():
         
         # Handle image upload
         if form.image.data:
-            image_path = save_uploaded_file(form.image.data, 'static/uploads/gallery')
-            photo.image_path = f"uploads/gallery/{os.path.basename(image_path)}"
-            
-            db.session.add(photo)
-            db.session.commit()
-            flash('Foto adicionada à galeria com sucesso!', 'success')
-            return redirect(url_for('admin_galeria'))
+            image_path = save_uploaded_file(form.image.data, 'uploads/gallery')
+            if image_path:
+                photo.image_path = image_path
+                db.session.add(photo)
+                db.session.commit()
+                flash('Foto adicionada à galeria com sucesso!', 'success')
+                return redirect(url_for('admin_galeria'))
+            else:
+                flash('Erro ao fazer upload da imagem. Tente novamente.', 'error')
     
     photos = PhotoGallery.query.order_by(PhotoGallery.created_at.desc()).all()
     return render_template('admin_galeria.html', form=form, photos=photos)
