@@ -35,9 +35,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = database_url
 app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
     "pool_recycle": 300,
     "pool_pre_ping": True,
-    "connect_args": {"charset": "utf8mb4"} if database_url.startswith("sqlite") else {
-        "sslmode": "require" if database_url.startswith("postgresql") else {}
-    }
+    "connect_args": {"charset": "utf8mb4"} if database_url.startswith("sqlite") else {}
 }
 
 # Configure upload settings (Railway-optimized)
@@ -74,7 +72,6 @@ def get_locale():
     # 2. Otherwise try to guess from browser
     return request.accept_languages.best_match(LANGUAGES.keys()) or 'pt'
 
-babel.locale_selector_func = get_locale
 
 # Configure Babel
 app.config['LANGUAGES'] = LANGUAGES
