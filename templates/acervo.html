@@ -247,14 +247,14 @@
         });
     }
     
-    searchInput.addEventListener('input', filterTable);
-    typeFilter.addEventListener('change', filterTable);
-    conservationFilter.addEventListener('change', filterTable);
+    if (searchInput) searchInput.addEventListener('input', filterTable);
+    if (typeFilter) typeFilter.addEventListener('change', filterTable);
+    if (conservationFilter) conservationFilter.addEventListener('change', filterTable);
     
     function clearFilters() {
-        searchInput.value = '';
-        typeFilter.value = '';
-        conservationFilter.value = '';
+        if (searchInput) searchInput.value = '';
+        if (typeFilter) typeFilter.value = '';
+        if (conservationFilter) conservationFilter.value = '';
         filterTable();
     }
     

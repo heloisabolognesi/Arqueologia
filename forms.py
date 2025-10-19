@@ -24,59 +24,40 @@ class RegisterForm(FlaskForm):
     university = SelectField('Faculdade', choices=[
         ('', 'Selecione a faculdade'),
         
-        # Brasil
         ('Brasil', [
-            ('USP', 'USP - Universidade de São Paulo'),
-            ('UNICAMP', 'UNICAMP - Universidade Estadual de Campinas'),
-            ('UFRJ', 'UFRJ - Universidade Federal do Rio de Janeiro'),
-            ('UnB', 'UnB - Universidade de Brasília'),
-            ('UFMG', 'UFMG - Universidade Federal de Minas Gerais'),
-            ('UFPA', 'UFPA - Universidade Federal do Pará'),
-            ('UFSCar', 'UFSCar - Universidade Federal de São Carlos'),
-            ('UFRGS', 'UFRGS - Universidade Federal do Rio Grande do Sul'),
-            ('PUC-SP', 'PUC-SP - Pontifícia Universidade Católica de São Paulo'),
-            ('PUC-Rio', 'PUC-Rio - Pontifícia Universidade Católica do Rio de Janeiro'),
-            ('UFPE', 'UFPE - Universidade Federal de Pernambuco'),
-            ('UFBA', 'UFBA - Universidade Federal da Bahia')
+            ('USP', 'USP'),
+            ('UNICAMP', 'UNICAMP'),
+            ('UFRJ', 'UFRJ'),
+            ('UnB', 'UnB'),
+            ('UFMG', 'UFMG'),
+            ('UFPA', 'UFPA'),
+            ('UFSCar', 'UFSCar'),
+            ('UFRGS', 'UFRGS'),
+            ('PUC-SP', 'PUC-SP'),
+            ('PUC-Rio', 'PUC-Rio'),
+            ('UFPE', 'UFPE'),
+            ('UFBA', 'UFBA')
         ]),
         
-        # EUA
-        ('EUA', [
+        ('Países Americanos', [
             ('Harvard', 'Harvard University'),
             ('Stanford', 'Stanford University'),
             ('UC Berkeley', 'University of California – Berkeley'),
-            ('UChicago', 'University of Chicago')
+            ('UChicago', 'University of Chicago'),
+            ('UNAM', 'UNAM'),
+            ('Tec Monterrey', 'Tecnológico de Monterrey'),
+            ('McGill', 'McGill University'),
+            ('Toronto', 'University of Toronto')
         ]),
         
-        # Reino Unido
-        ('Reino Unido', [
+        ('Europa', [
             ('Oxford', 'University of Oxford'),
             ('Cambridge', 'University of Cambridge'),
-            ('UCL', 'University College London')
-        ]),
-        
-        # Canadá
-        ('Canadá', [
-            ('Toronto', 'University of Toronto'),
-            ('McGill', 'McGill University')
-        ]),
-        
-        # Espanha
-        ('Espanha', [
+            ('UCL', 'University College London'),
             ('Complutense', 'Universidad Complutense de Madrid'),
-            ('Barcelona', 'Universidad de Barcelona')
-        ]),
-        
-        # França
-        ('França', [
+            ('Barcelona', 'Universidad de Barcelona'),
             ('Sorbonne', 'Sorbonne Université'),
             ('EHESS', 'École des Hautes Études en Sciences Sociales')
-        ]),
-        
-        # México
-        ('México', [
-            ('UNAM', 'UNAM - Universidad Nacional Autónoma de México'),
-            ('Tec Monterrey', 'Tecnológico de Monterrey')
         ]),
         
         ('custom', 'Outra (digitar manualmente)')
