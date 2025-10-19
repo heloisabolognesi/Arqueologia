@@ -75,7 +75,8 @@ babel.init_app(app)
 LANGUAGES = {
     'pt': 'Português',
     'en': 'English', 
-    'es': 'Español'
+    'es': 'Español',
+    'fr': 'Français'
 }
 
 def get_locale():
@@ -247,6 +248,42 @@ def simple_translate(text, lang=None):
             'Adicionar Primeira Foto': 'Agregar Primera Foto',
             'Conheca mais da nossa equipe': 'Conoce más sobre nuestro equipo',
             'Somos a equipe Tech Era, formada por alunos do 6º ao 9º ano do SESI AE Carvalho 415. Participamos da FIRST® LEGO® League (FLL), um torneio internacional de robótica que vai muito além da construção de robôs. Nosso objetivo é aprender, inovar e compartilhar conhecimento, sempre colocando em prática os valores que guiam a comunidade da FIRST.\n\nA missão da FIRST é inspirar jovens a se tornarem líderes e inovadores, usando a ciência e a tecnologia para transformar o futuro. Para isso, seguimos os Core Values, que nos lembram todos os dias que robótica é muito mais do que robôs:\n\nDescoberta: buscamos sempre aprender coisas novas.\nInovação: usamos a criatividade para resolver problemas reais.\nImpacto: aplicamos o que sabemos para melhorar nosso mundo.\nInclusão: trabalhamos juntos, respeitando e valorizando as diferenças.\nTrabalho em equipe: colaboramos e apoiamos uns aos outros.\nDiversão: celebramos cada conquista e aprendemos com cada desafio.\n\nMais do que competir, a Tech Era acredita que participar da FLL é uma forma de crescer, se preparar para o futuro e provar que tecnologia e cooperação caminham lado a lado.': 'Somos el equipo Tech Era, formado por estudiantes de 6º a 9º grado de SESI AE Carvalho 415. Participamos en FIRST® LEGO® League (FLL), un torneo internacional de robótica que va mucho más allá de construir robots. Nuestro objetivo es aprender, innovar y compartir conocimiento, siempre poniendo en práctica los valores que guían a la comunidad FIRST.\n\nLa misión de FIRST es inspirar a los jóvenes a convertirse en líderes e innovadores, usando la ciencia y la tecnología para transformar el futuro. Para esto, seguimos los Core Values, que nos recuerdan todos los días que la robótica es mucho más que robots:\n\nDescubrimiento: siempre buscamos aprender cosas nuevas.\nInnovación: usamos la creatividad para resolver problemas reales.\nImpacto: aplicamos lo que sabemos para mejorar nuestro mundo.\nInclusión: trabajamos juntos, respetando y valorando las diferencias.\nTrabajo en equipo: colaboramos y nos apoyamos mutuamente.\nDiversión: celebramos cada logro y aprendemos de cada desafío.\n\nMás que competir, Tech Era cree que participar en FLL es una forma de crecer, prepararse para el futuro y demostrar que la tecnología y la cooperación van de la mano.'
+        },
+        'fr': {
+            'Bem-vindo': 'Bienvenue',
+            'Laboratório e Acervo Arqueológico Remoto Integrado': 'Laboratoire et Collection Archéologique à Distance Intégré',
+            'Sistema completo de gestão arqueológica para centralizar documentação, catalogação, acervo e inventário, facilitando a comunicação entre equipes de campo e laboratório.': 'Système complet de gestion archéologique pour centraliser la documentation, le catalogage, la collection et l\'inventaire, facilitant la communication entre les équipes de terrain et de laboratoire.',
+            'Entrar': 'Se connecter',
+            'Fazer Login': 'Connexion',
+            'Cadastrar': 'S\'inscrire',
+            'Criar Conta': 'Créer un compte',
+            'Funcionalidades Principais': 'Fonctionnalités principales',
+            'Acervo Digital': 'Collection numérique',
+            'Catalogação': 'Catalogage',
+            'Scanner 3D': 'Scanner 3D',
+            'Profissionais': 'Professionnels',
+            'Inventário': 'Inventaire',
+            'Transporte': 'Transport',
+            'Dashboard': 'Tableau de bord',
+            'Acervo': 'Collection',
+            'Galeria': 'Galerie',
+            'Idioma': 'Langue',
+            'Administração': 'Administration',
+            'Gerenciar Galeria': 'Gérer la galerie',
+            'Sair': 'Déconnexion',
+            'Email': 'Email',
+            'Senha': 'Mot de passe',
+            'Nome de Usuário': 'Nom d\'utilisateur',
+            'Galeria de Fotos': 'Galerie de photos',
+            'Todas': 'Toutes',
+            'Gerais': 'Générales',
+            'Equipe': 'Équipe',
+            'Eventos': 'Événements',
+            'Ver': 'Voir',
+            'Geral': 'Général',
+            'Evento': 'Événement',
+            'Anterior': 'Précédent',
+            'Próxima': 'Suivant'
         }
     }
     
