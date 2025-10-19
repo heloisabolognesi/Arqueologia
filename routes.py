@@ -82,8 +82,12 @@ def register():
             account_type = form.account_type.data
             if account_type in ['estudante', 'universitaria']:
                 # Check if required academic fields are filled
-                if not form.university.data and not form.university_custom.data:
-                    flash('Por favor, selecione ou digite o nome da faculdade.', 'error')
+                if not form.university.data:
+                    flash('Por favor, selecione a faculdade.', 'error')
+                    return render_template('register.html', form=form)
+                # If custom university is selected, ensure the custom field is filled
+                if form.university.data == 'custom' and not form.university_custom.data:
+                    flash('Por favor, digite o nome da faculdade.', 'error')
                     return render_template('register.html', form=form)
                 if not form.course.data:
                     flash('Por favor, preencha o campo Curso/Área de estudo.', 'error')
