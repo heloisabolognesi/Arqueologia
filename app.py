@@ -49,8 +49,16 @@ for subdir in upload_subdirs:
 app.config['UPLOAD_FOLDER'] = upload_folder
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 
-# Railway static files optimization
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 31536000
+# Disable cache in development for immediate updates
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+
+# Add cache control headers
+@app.after_request
+def add_header(response):
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '-1'
+    return response
 
 # Initialize extensions
 db.init_app(app)
