@@ -78,10 +78,47 @@ def register():
         if existing_user:
             flash('Este email já está cadastrado.', 'error')
         else:
+            # Validate academic fields for student/university accounts
+            account_type = form.account_type.data
+            if account_type in ['estudante', 'universitaria']:
+                # Check if required academic fields are filled
+                if not form.university.data and not form.university_custom.data:
+                    flash('Por favor, selecione ou digite o nome da faculdade.', 'error')
+                    return render_template('register.html', form=form)
+                if not form.course.data:
+                    flash('Por favor, preencha o campo Curso/Área de estudo.', 'error')
+                    return render_template('register.html', form=form)
+                if not form.entry_year.data:
+                    flash('Por favor, preencha o ano de entrada.', 'error')
+                    return render_template('register.html', form=form)
+                if not form.institution_type.data:
+                    flash('Por favor, selecione o tipo de instituição.', 'error')
+                    return render_template('register.html', form=form)
+                if not form.city.data or not form.state.data or not form.country.data:
+                    flash('Por favor, preencha todos os campos de localização.', 'error')
+                    return render_template('register.html', form=form)
+            
+            # Determine which university value to use
+            university_value = None
+            if account_type in ['estudante', 'universitaria']:
+                if form.university.data == 'custom':
+                    university_value = None
+                else:
+                    university_value = form.university.data
+            
             user = User(
                 username=form.username.data,
                 email=form.email.data,
-                password_hash=generate_password_hash(form.password.data)
+                password_hash=generate_password_hash(form.password.data),
+                account_type=account_type,
+                university=university_value,
+                university_custom=form.university_custom.data if form.university.data == 'custom' else None,
+                course=form.course.data if account_type in ['estudante', 'universitaria'] else None,
+                entry_year=form.entry_year.data if account_type in ['estudante', 'universitaria'] else None,
+                institution_type=form.institution_type.data if account_type in ['estudante', 'universitaria'] else None,
+                city=form.city.data if account_type in ['estudante', 'universitaria'] else None,
+                state=form.state.data if account_type in ['estudante', 'universitaria'] else None,
+                country=form.country.data if account_type in ['estudante', 'universitaria'] else None
             )
             db.session.add(user)
             db.session.commit()
