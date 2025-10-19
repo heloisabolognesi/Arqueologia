@@ -287,24 +287,28 @@ with app.app_context():
             db.session.commit()
             logging.info("Admin user created from environment variables")
     
-    # Create additional admin users
-    additional_admins = [
-        {'username': 'Anna Schimidt', 'email': 'anna.schimidtt@sesisp.org.br', 'password': '27072000'},
-        {'username': 'Roboticos415F2', 'email': 'roboticos415f2@gmail.com', 'password': '24062025'}
-    ]
+    # Create additional admin users from environment variables
+    # Format: ADMIN_USERS_JSON='[{"username":"Name","email":"email@example.com","password":"pass"}]'
+    import json
+    admin_users_json = os.environ.get('ADMIN_USERS_JSON')
     
-    for admin_data in additional_admins:
-        existing_admin = User.query.filter_by(email=admin_data['email']).first()
-        if not existing_admin:
-            new_admin = User(
-                username=admin_data['username'],
-                email=admin_data['email'],
-                password_hash=generate_password_hash(admin_data['password']),
-                is_admin=True
-            )
-            db.session.add(new_admin)
-            db.session.commit()
-            logging.info(f"Admin user {admin_data['username']} created")
+    if admin_users_json:
+        try:
+            additional_admins = json.loads(admin_users_json)
+            for admin_data in additional_admins:
+                existing_admin = User.query.filter_by(email=admin_data['email']).first()
+                if not existing_admin:
+                    new_admin = User(
+                        username=admin_data['username'],
+                        email=admin_data['email'],
+                        password_hash=generate_password_hash(admin_data['password']),
+                        is_admin=True
+                    )
+                    db.session.add(new_admin)
+                    db.session.commit()
+                    logging.info(f"Admin user {admin_data['username']} created")
+        except json.JSONDecodeError:
+            logging.error("Invalid ADMIN_USERS_JSON format")
 
 # Import routes
 import routes
