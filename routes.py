@@ -74,9 +74,13 @@ def login():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        existing_user = User.query.filter_by(email=form.email.data).first()
-        if existing_user:
+        existing_email = User.query.filter_by(email=form.email.data).first()
+        existing_username = User.query.filter_by(username=form.username.data).first()
+        
+        if existing_email:
             flash('Este email já está cadastrado.', 'error')
+        elif existing_username:
+            flash('Este nome de usuário já está em uso. Por favor, escolha outro.', 'error')
         else:
             # Validate academic fields for student/university accounts
             account_type = form.account_type.data
