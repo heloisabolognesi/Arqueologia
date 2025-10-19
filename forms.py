@@ -23,6 +23,8 @@ class RegisterForm(FlaskForm):
     # Academic information (conditional - for students and university accounts)
     university = SelectField('Faculdade', choices=[
         ('', 'Selecione a faculdade'),
+        
+        # Brasil
         ('Brasil', [
             ('USP', 'USP - Universidade de São Paulo'),
             ('UNICAMP', 'UNICAMP - Universidade Estadual de Campinas'),
@@ -37,33 +39,46 @@ class RegisterForm(FlaskForm):
             ('UFPE', 'UFPE - Universidade Federal de Pernambuco'),
             ('UFBA', 'UFBA - Universidade Federal da Bahia')
         ]),
+        
+        # EUA
         ('EUA', [
             ('Harvard', 'Harvard University'),
             ('Stanford', 'Stanford University'),
             ('UC Berkeley', 'University of California – Berkeley'),
             ('UChicago', 'University of Chicago')
         ]),
+        
+        # Reino Unido
         ('Reino Unido', [
             ('Oxford', 'University of Oxford'),
             ('Cambridge', 'University of Cambridge'),
             ('UCL', 'University College London')
         ]),
+        
+        # Canadá
         ('Canadá', [
             ('Toronto', 'University of Toronto'),
             ('McGill', 'McGill University')
         ]),
+        
+        # Espanha
         ('Espanha', [
             ('Complutense', 'Universidad Complutense de Madrid'),
             ('Barcelona', 'Universidad de Barcelona')
         ]),
+        
+        # França
         ('França', [
             ('Sorbonne', 'Sorbonne Université'),
             ('EHESS', 'École des Hautes Études en Sciences Sociales')
         ]),
+        
+        # México
         ('México', [
             ('UNAM', 'UNAM - Universidad Nacional Autónoma de México'),
             ('Tec Monterrey', 'Tecnológico de Monterrey')
         ]),
+        
         ('custom', 'Outra (digitar manualmente)')
     ], validators=[Optional()])
     
