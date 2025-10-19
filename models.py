@@ -11,6 +11,19 @@ class User(UserMixin, db.Model):
     is_active_user = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
+    # Account type fields
+    account_type = db.Column(db.String(50))  # profissional, universitaria, estudante
+    
+    # Academic information fields (for student and university accounts)
+    university = db.Column(db.String(200))
+    university_custom = db.Column(db.String(200))  # For custom university input
+    course = db.Column(db.String(200))
+    entry_year = db.Column(db.Integer)
+    institution_type = db.Column(db.String(50))  # publica, privada
+    city = db.Column(db.String(100))
+    state = db.Column(db.String(100))
+    country = db.Column(db.String(100))
+    
     # Relationships
     artifacts = db.relationship('Artifact', backref='cataloged_by', lazy='dynamic')
 

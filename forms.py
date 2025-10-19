@@ -11,6 +11,73 @@ class RegisterForm(FlaskForm):
     username = StringField('Nome de Usuário', validators=[DataRequired(), Length(min=3, max=64)])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Senha', validators=[DataRequired(), Length(min=6)])
+    
+    # Account type
+    account_type = SelectField('Tipo de Conta', choices=[
+        ('', 'Selecione o tipo de conta'),
+        ('profissional', 'Conta Profissional'),
+        ('universitaria', 'Conta Universitária'),
+        ('estudante', 'Conta Estudante')
+    ], validators=[DataRequired()])
+    
+    # Academic information (conditional - for students and university accounts)
+    university = SelectField('Faculdade', choices=[
+        ('', 'Selecione a faculdade'),
+        ('Brasil', [
+            ('USP', 'USP - Universidade de São Paulo'),
+            ('UNICAMP', 'UNICAMP - Universidade Estadual de Campinas'),
+            ('UFRJ', 'UFRJ - Universidade Federal do Rio de Janeiro'),
+            ('UnB', 'UnB - Universidade de Brasília'),
+            ('UFMG', 'UFMG - Universidade Federal de Minas Gerais'),
+            ('UFPA', 'UFPA - Universidade Federal do Pará'),
+            ('UFSCar', 'UFSCar - Universidade Federal de São Carlos'),
+            ('UFRGS', 'UFRGS - Universidade Federal do Rio Grande do Sul'),
+            ('PUC-SP', 'PUC-SP - Pontifícia Universidade Católica de São Paulo'),
+            ('PUC-Rio', 'PUC-Rio - Pontifícia Universidade Católica do Rio de Janeiro'),
+            ('UFPE', 'UFPE - Universidade Federal de Pernambuco'),
+            ('UFBA', 'UFBA - Universidade Federal da Bahia')
+        ]),
+        ('EUA', [
+            ('Harvard', 'Harvard University'),
+            ('Stanford', 'Stanford University'),
+            ('UC Berkeley', 'University of California – Berkeley'),
+            ('UChicago', 'University of Chicago')
+        ]),
+        ('Reino Unido', [
+            ('Oxford', 'University of Oxford'),
+            ('Cambridge', 'University of Cambridge'),
+            ('UCL', 'University College London')
+        ]),
+        ('Canadá', [
+            ('Toronto', 'University of Toronto'),
+            ('McGill', 'McGill University')
+        ]),
+        ('Espanha', [
+            ('Complutense', 'Universidad Complutense de Madrid'),
+            ('Barcelona', 'Universidad de Barcelona')
+        ]),
+        ('França', [
+            ('Sorbonne', 'Sorbonne Université'),
+            ('EHESS', 'École des Hautes Études en Sciences Sociales')
+        ]),
+        ('México', [
+            ('UNAM', 'UNAM - Universidad Nacional Autónoma de México'),
+            ('Tec Monterrey', 'Tecnológico de Monterrey')
+        ]),
+        ('custom', 'Outra (digitar manualmente)')
+    ], validators=[Optional()])
+    
+    university_custom = StringField('Digite o nome da faculdade', validators=[Optional(), Length(max=200)])
+    course = StringField('Curso/Área de estudo', validators=[Optional(), Length(max=200)])
+    entry_year = IntegerField('Ano de entrada', validators=[Optional()])
+    institution_type = SelectField('Tipo de instituição', choices=[
+        ('', 'Selecione'),
+        ('publica', 'Pública'),
+        ('privada', 'Privada')
+    ], validators=[Optional()])
+    city = StringField('Cidade', validators=[Optional(), Length(max=100)])
+    state = StringField('Estado', validators=[Optional(), Length(max=100)])
+    country = StringField('País', validators=[Optional(), Length(max=100)])
 
 class ArtifactForm(FlaskForm):
     name = StringField('Nome do Artefato', validators=[DataRequired(), Length(max=200)])
